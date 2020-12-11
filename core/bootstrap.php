@@ -1,6 +1,7 @@
 <?php
 
 use App\Core\App;
+use App\Middleware\Auth;
 use App\Core\Helpers\{session_helper, cookie_helper};
 use App\Core\Database\{Connection, QueryBuilder};
 

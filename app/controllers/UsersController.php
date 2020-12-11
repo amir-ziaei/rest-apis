@@ -6,12 +6,9 @@
 namespace App\Controller;
 
 use App\Model\User;
-use App\Traits\Parsley;
 
 class UsersController extends Controller
 {
-
-    use Parsley;
 
     public function index()
     {
@@ -44,9 +41,10 @@ class UsersController extends Controller
         }
 
         $user->email = $this->post("email");
-        $user->password = $this->post("password");
+        if($this->post("password")) {
+            $user->password = password_hash($this->post("password"), PASSWORD_BCRYPT);
+        }
         $user->name = $this->post("name");
-        $user->is_admin = $this->post("is_admin");
         $user->save();
 
         return $this->s200($user);
@@ -61,6 +59,9 @@ class UsersController extends Controller
         }
 
         $user->delete();
+
+        (new AuthController())->logout();
+
         return $this->s200();
     }
 
@@ -101,9 +102,8 @@ class UsersController extends Controller
     {
         return [
             'email' => 'required|email',
-            'password' => 'required|min:6',
-            'name' => 'required|alpha_spaces',
-            'is_admin' => 'required|boolean'
+            'password' => 'min:6',
+            'name' => 'required|alpha_spaces'
         ];
     }
 }

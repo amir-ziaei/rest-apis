@@ -8,8 +8,10 @@ namespace App\Model;
 use App\Core\App;
 use App\Traits\JsonSerializer;
 
-class Model implements \JsonSerializable
+abstract class Model implements \JsonSerializable
 {
+    protected $guarded = [];
+
     use JsonSerializer;
 
     protected $db;
@@ -31,6 +33,11 @@ class Model implements \JsonSerializable
 
     public function save()
     {
+        if(! empty($this->guarded)) {
+            foreach ($this->guarded as $property)
+                unset($this->{$property});
+        }
+
         // Insert if id is null
         if( is_null($this->id) )
         {
@@ -41,7 +48,7 @@ class Model implements \JsonSerializable
         // Update otherwise
         else
         {
-            $this->db->update(self::table(), $this, "id=:id", $this->id);
+            $this->db->update(self::table(), $this, "id=:id", ["id" => $this->id]);
         }
 
         return $this;
@@ -75,7 +82,7 @@ class Model implements \JsonSerializable
 
     }
 
-    public static function deleteALl($whereValues, $where = "id=:id")
+    public static function deleteAll($whereValues, $where = "id=:id")
     {
         $instance = new static;
         $type = gettype($whereValues);

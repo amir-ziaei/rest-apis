@@ -41,4 +41,9 @@ class Auth extends Model
         $this->expires_at = $date->format('Y-m-d H:i:s');
         return $this;
     }
+
+    public static function getName()
+    {
+        return User::find(@$_SESSION['user_id'])->name;
+    }
 }

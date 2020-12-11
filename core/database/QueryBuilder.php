@@ -138,11 +138,11 @@ class QueryBuilder
     {
         $sql = sprintf('update %s set',$table);
 
-        foreach($values as $key => $value){
-            if(is_numeric($value)){
-                $vals[]=sprintf('%s=%d',$key,$value);
-            }else{
-                $vals[]=sprintf("%s='%s'",$key,$value);
+        foreach($values as $key => $value) {
+            if (is_numeric($value)) {
+                $vals[] = sprintf('%s=%d', $key, $value);
+            } else {
+                $vals[] = sprintf("%s='%s'", $key, $value);
             }
         }
 

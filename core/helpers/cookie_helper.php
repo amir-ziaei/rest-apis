@@ -22,6 +22,17 @@ class cookie_helper
         return null;
     }
 
+    public static function delete($key)
+    {
+        if (isset($_COOKIE[$key])) {
+            unset($_COOKIE[$key]);
+            setcookie($key, null, -1, '/');
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static function get_default_expiry_time()
     {
         return strtotime(

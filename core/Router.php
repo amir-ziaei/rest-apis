@@ -30,11 +30,12 @@ class Router
         try {
             $res = $dispatcher->dispatch($method, $uri);
         } catch (HttpRouteNotFoundException $e) {
-            (new Response)->e404();
+            (new Responder)->e404();
         } catch (HttpMethodNotAllowedException $e) {
-            (new Response)->e403();
+            $allowed_methods = str_replace("Allow: ", '', $e->getMessage());
+            (new Responder)->e405($allowed_methods);
         }
 
-        (new Response)->send($res);
+        (new Responder)->response($res);
     }
 }

@@ -38,6 +38,10 @@ trait Parsley {
         if (strlen($json_params) > 0 && $this->isValidJSON($json_params))
         {
             $decoded_params = (array) json_decode($json_params);
+            if( ! isset($decoded_params['data'])) {
+                // TODO: Take care of the exception
+                throw new \Exception("Data missing");
+            }
             foreach ($decoded_params['data'] as $key => $value) {
                 $decoded_params[$key] = safe($value);
             }

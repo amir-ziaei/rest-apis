@@ -2,6 +2,10 @@
 <?php
 
 require 'vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
 $query = require 'core/bootstrap.php';
 
 use App\Core\Router;

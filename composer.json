@@ -9,6 +9,7 @@
         "sabre/http": "^5.1",
         "ext-json": "*",
       "ext-pdo": "*",
-        "rakit/validation": "^1.4"
+        "rakit/validation": "^1.4",
+        "vlucas/phpdotenv": "^5.4"
     }
 }
